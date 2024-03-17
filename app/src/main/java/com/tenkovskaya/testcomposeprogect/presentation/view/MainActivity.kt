@@ -22,15 +22,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//    val fakeViewModel = MainViewModel(
-//        calculateExpressBetUseCase = CalculateExpressBetUseCase(),
-//        calculateSystemBetUseCase = CalculateSystemBetUseCase(),
-//        calculateForkUseCase = CalculateForkUseCase()
-//    )
-//    MyApp(fakeViewModel)
-//}
-
