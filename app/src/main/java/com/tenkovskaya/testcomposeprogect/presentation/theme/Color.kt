@@ -1,4 +1,4 @@
-package com.tenkovskaya.testcomposeprogect.ui.theme
+package com.tenkovskaya.testcomposeprogect.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

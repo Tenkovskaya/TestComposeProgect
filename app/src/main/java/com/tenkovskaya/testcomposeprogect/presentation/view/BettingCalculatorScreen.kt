@@ -26,7 +26,7 @@ import com.tenkovskaya.testcomposeprogect.presentation.viewModel.MainViewModel
 fun BettingCalculatorScreen(viewModel: MainViewModel) {
     var betAmount by remember { mutableStateOf("") }
     var coefficient by remember { mutableStateOf("") }
-    var result by remember { mutableStateOf<String?>(null) }
+    var resultText by remember { mutableStateOf("Enter values to calculate") }
 
     Column(
         modifier = Modifier
@@ -39,23 +39,34 @@ fun BettingCalculatorScreen(viewModel: MainViewModel) {
             value = betAmount,
             onValueChange = { betAmount = it },
             label = { Text("Bet Amount") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = coefficient,
             onValueChange = { coefficient = it },
             label = { Text("Coefficient") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { result = viewModel.calculateExpressBet(betAmount.toDoubleOrNull() ?: 0.0, coefficient.toDoubleOrNull() ?: 0.0) },
+            onClick = {
+                val betAmountDouble = betAmount.toDoubleOrNull()
+                val coefficientDouble = coefficient.toDoubleOrNull()
+                if (betAmountDouble != null && coefficientDouble != null) {
+                    val result = viewModel.calculateExpressBet(betAmountDouble, coefficientDouble)
+                    resultText = "Coefficient: ${"%.2f".format(result.totalCoefficient)}, Winning: ${"%.2f".format(result.potentialWinnings)} руб."
+                } else {
+                    resultText = "Please enter valid numbers"
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Calculate")
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Result: ${result ?: "Enter values"}")
+        Text(resultText)
     }
 }

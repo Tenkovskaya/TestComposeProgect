@@ -27,7 +27,7 @@ fun SystemBetCalculatorScreen(viewModel: MainViewModel) {
     var totalBet by remember { mutableStateOf("") }
     var numberOfOutcomes by remember { mutableStateOf("") }
     var coefficients by remember { mutableStateOf("") }
-    var result by remember { mutableStateOf<String?>(null) }
+    var resultText by remember { mutableStateOf("Enter values to calculate") }
 
     Column(
         modifier = Modifier
@@ -40,33 +40,41 @@ fun SystemBetCalculatorScreen(viewModel: MainViewModel) {
             value = totalBet,
             onValueChange = { totalBet = it },
             label = { Text("Total Bet Amount") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = numberOfOutcomes,
             onValueChange = { numberOfOutcomes = it },
             label = { Text("Number of Outcomes") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = coefficients,
             onValueChange = { coefficients = it },
             label = { Text("Coefficients (comma separated)") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
                 val coeffsList = coefficients.split(",").mapNotNull { it.toDoubleOrNull() }
-                result = viewModel.calculateSystemBet(totalBet.toDoubleOrNull() ?: 0.0, numberOfOutcomes.toIntOrNull() ?: 0, coeffsList)
+                if (totalBet.toDoubleOrNull() != null && numberOfOutcomes.toIntOrNull() != null && coeffsList.isNotEmpty()) {
+                    val result = viewModel.calculateSystemBet(totalBet.toDoubleOrNull() ?: 0.0, numberOfOutcomes.toIntOrNull() ?: 0, coeffsList)
+                    resultText = "Total Winning: ${"%.2f".format(result.potentialWinnings)} руб."
+                } else {
+                    resultText = "Please enter valid numbers"
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Calculate")
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Result: ${result ?: "Enter values"}")
+        Text(resultText)
     }
 }

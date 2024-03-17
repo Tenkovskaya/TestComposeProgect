@@ -26,7 +26,7 @@ import com.tenkovskaya.testcomposeprogect.presentation.viewModel.MainViewModel
 fun ForkBetCalculatorScreen(viewModel: MainViewModel) {
     var coefficient1 by remember { mutableStateOf("") }
     var coefficient2 by remember { mutableStateOf("") }
-    var result by remember { mutableStateOf<String?>(null) }
+    var resultText by remember { mutableStateOf("Enter values to calculate") }
 
     Column(
         modifier = Modifier
@@ -39,25 +39,34 @@ fun ForkBetCalculatorScreen(viewModel: MainViewModel) {
             value = coefficient1,
             onValueChange = { coefficient1 = it },
             label = { Text("Coefficient 1") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = coefficient2,
             onValueChange = { coefficient2 = it },
             label = { Text("Coefficient 2") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                result = viewModel.calculateFork(coefficient1.toDoubleOrNull() ?: 0.0, coefficient2.toDoubleOrNull() ?: 0.0)
+                val coeff1Double = coefficient1.toDoubleOrNull()
+                val coeff2Double = coefficient2.toDoubleOrNull()
+                if (coeff1Double != null && coeff2Double != null) {
+                    val forkResult = viewModel.calculateFork(coeff1Double, coeff2Double)
+                    resultText = if (forkResult.isFork) "Fork found: Profitable!" else "No fork: Not profitable."
+                } else {
+                    resultText = "Please enter valid numbers"
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Calculate")
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Result: ${result ?: "Enter values"}")
+        Text(resultText)
     }
 }
