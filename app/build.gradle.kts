@@ -54,27 +54,35 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("androidx.compose.ui:ui")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom.v20240400))
+    //noinspection UseTomlInstead
+//    implementation("androidx.compose.ui:ui")
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    testImplementation("junit:junit:4.13.2")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation ("androidx.compose.material:material:1.5.4")
-    implementation("androidx.ads:ads-identifier:1.0.0-alpha05")
-    implementation("com.google.guava:guava:28.0-jre")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.7.3")
+    implementation(libs.androidx.material3.android)
+    testImplementation(libs.junit)
+    //noinspection UseTomlInstead
+//    implementation("androidx.compose.ui:ui-graphics")
+    //noinspection UseTomlInstead
+//    implementation("androidx.compose.ui:ui-tooling-preview")
+    //noinspection UseTomlInstead
+//    implementation("androidx.compose.material3:material3")
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    //noinspection UseTomlInstead
+//    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    //noinspection UseTomlInstead
+//    debugImplementation("androidx.compose.ui:ui-tooling")
+    //noinspection UseTomlInstead
+//    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation (libs.androidx.material)
+    implementation(libs.androidx.ads.identifier)
+    implementation(libs.guava)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.guava)
 }
